@@ -10,6 +10,9 @@ module.exports = {
     //     storage: './tabtracker.sqlite',
     //     operatorsAliases: false
     // },
-    host: 'mongodb://localhost/tabtracker'
+    host: 'mongodb://localhost/tabtracker',
+  },
+  authentication: {
+    jwtSecret: process.env.JWT_SECRET || 'secret'
   }
 }

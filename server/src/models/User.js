@@ -1,11 +1,28 @@
 const mongoose = require('mongoose')
+const bcrypt = require('bcrypt')
 
 const UserSchema = mongoose.Schema({
-  email: String,
-  password: String
+  email: {
+    type: String,
+    required: true,
+    unique: true
+  },
+  password: {
+    type: String,
+    required: true,
+    set: (pass) => {
+      var hash = bcrypt.hashSync(pass, 10);
+      console.log("hash the password: " + pass + " -> " + hash);
+      return hash;
+    }
+  }
 })
-UserSchema.methods.added = function() { // (new modelInfo.model({})).added()
-  console.log('Add the info succeed!')
+
+UserSchema.methods.added = function(userJson) { // (new modelInfo.model({})).added()
+  console.log('Add the info succeed:' + JSON.stringify(userJson))
+}
+UserSchema.methods.compare = function (password) {
+  return bcrypt.compareSync(password, this.password);
 }
 
 const modelName = 'User'

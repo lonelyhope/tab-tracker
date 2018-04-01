@@ -46,8 +46,7 @@ module.exports = {
         error: 'You should input the correct email address.'
       })
       flag = false
-    }
-    if (password.length < 8 || password.length >= 32) {
+    } else if (password.length < 8 || password.length >= 32) {
       res.status(400).send({
         error: 'The password should be longer than 7 and be shorter than 32'
       })

@@ -3,7 +3,7 @@
     <v-flex xs6 offset-xs3>
       <div class="white elevation-2">
         <v-toolbar flat dense class="cyan" dark>
-          <v-toolbar-title>Register</v-toolbar-title>
+          <v-toolbar-title>Login</v-toolbar-title>
         </v-toolbar>
         <div class="pl-4 pr-4 pt-2 pb-2">
             <v-text-field
@@ -18,8 +18,8 @@
             ></v-text-field>
             <div class="error" v-html="error" />
             <br />
-            <v-btn @click="register" class="cyan">
-              submit
+            <v-btn @click="login" class="cyan">
+              login
             </v-btn>
         </div>
       </div>
@@ -34,15 +34,15 @@ import store from '../store/store'
 export default {
   data () {
     return {
-      email: '',
-      password: '',
+      email: null,
+      password: null,
       error: null
     }
   },
   methods: {
-    register: async function () {
+    login: async function () {
       try {
-        const response = await AuthenticationService.register({
+        const response = await AuthenticationService.login({
           email: this.email,
           password: this.password
         })
@@ -50,8 +50,8 @@ export default {
         store.dispatch('setToken', response.data.token)
         store.dispatch('setUser', response.data.user.email)
       } catch (err) {
+        console.log(err)
         this.error = err.response.data.error // get the response from the axios and get the error
-        console.log(err.response.data.error)
       }
     }
   }
@@ -59,8 +59,6 @@ export default {
 </script>
 
 <style scoped>
-/* anyone here will not influence the content in other files
-  只为本文件的template服务 因为有scoped*/
 .error {
   color: white;
 }

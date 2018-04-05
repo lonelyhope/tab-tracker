@@ -24,6 +24,7 @@ import store from '../../store/store'
 import SongMetaData from './SongMetaData'
 import YouTube from './YouTube'
 import Lyrics from './Lyrics'
+import HistoryService from '@/services/HistoryService'
 
 export default {
   data () {
@@ -33,11 +34,16 @@ export default {
   },
   async mounted () {
     const songId = store.state.route.params.songId
-    console.log(songId)
     const res = await (SongsService.show(songId))
     this.song = res.data
-    console.log('view song:')
-    console.log(res.data)
+    console.log(`view song: ${songId}, ${res.data}`)
+
+    if (store.state.isUserLoggedIn) {
+      HistoryService.add({
+        email: store.state.user,
+        songId: songId
+      })
+    }
   },
   components: {
     SongMetaData,

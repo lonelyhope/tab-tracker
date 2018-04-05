@@ -1,5 +1,6 @@
 import Vue from 'Vue'
 import Vuex from 'Vuex'
+// import createPersistedState from 'vuex-persistedstate'
 
 Vue.use(Vuex)
 
@@ -30,6 +31,9 @@ const store = new Vuex.Store({
       commit('setUser', user)
     }
   }
+  // plugins: [
+  //   createPersistedState() // 将store信息保存在 localstorage 中，初始化
+  // ]
 })
 
 export default store

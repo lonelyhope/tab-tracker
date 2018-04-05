@@ -1,5 +1,6 @@
 const mongoose = require('mongoose')
 const bcrypt = require('bcrypt')
+const Schema = mongoose.Schema
 
 const UserSchema = mongoose.Schema({
   email: {
@@ -15,7 +16,8 @@ const UserSchema = mongoose.Schema({
       console.log("hash the password: " + pass + " -> " + hash);
       return hash;
     }
-  }
+  },
+  bookmark: [{ type: Schema.Types.ObjectId, ref: 'Song' }]
 })
 
 UserSchema.methods.added = function(userJson) { // (new modelInfo.model({})).added()

@@ -24,6 +24,10 @@ fs.readdirSync(__dirname) // 读取目录下的model文件
 })
 // db.sequelize = sequelize
 // db.Sequelize = Sequelize
+Object.keys(db).forEach(modelName => {
+  
+})
+
 db.mongoose = mongoose
 
 module.exports = db

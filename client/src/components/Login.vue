@@ -1,11 +1,9 @@
 <template>
   <v-layout row>
     <v-flex xs6 offset-xs3>
-      <div class="white elevation-2">
-        <v-toolbar flat dense class="cyan" dark>
-          <v-toolbar-title>Login</v-toolbar-title>
-        </v-toolbar>
-        <div class="pl-4 pr-4 pt-2 pb-2">
+      <panel title="login">
+        <slot>
+          <div class="pl-4 pr-4 pt-2 pb-2">
             <v-text-field
               label="email"
               v-model="email"
@@ -16,13 +14,14 @@
               v-model="password"
               type="password"
             ></v-text-field>
-            <div class="error" v-html="error" />
+            <div class="err" v-html="error" />
             <br />
             <v-btn @click="login" class="cyan">
               login
             </v-btn>
-        </div>
-      </div>
+          </div>
+        </slot>
+      </panel>
     </v-flex>
   </v-layout>
 </template>
@@ -49,17 +48,22 @@ export default {
         this.error = null
         store.dispatch('setToken', response.data.token)
         store.dispatch('setUser', response.data.user.email)
+        this.$router.push({
+          name: 'songs'
+        })
       } catch (err) {
         console.log(err)
         this.error = err.response.data.error // get the response from the axios and get the error
       }
     }
+  },
+  components: {
   }
 }
 </script>
 
 <style scoped>
-.error {
-  color: white;
+.err {
+  color: red;
 }
 </style>

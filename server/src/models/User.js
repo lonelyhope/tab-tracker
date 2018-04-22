@@ -12,19 +12,19 @@ const UserSchema = mongoose.Schema({
     type: String,
     required: true,
     set: (pass) => {
-      var hash = bcrypt.hashSync(pass, 10);
-      console.log("hash the password: " + pass + " -> " + hash);
-      return hash;
+      var hash = bcrypt.hashSync(pass, 10)
+      console.log('hash the password: ' + pass + ' -> ' + hash)
+      return hash
     }
   },
   bookmark: [{ type: Schema.Types.ObjectId, ref: 'Song' }]
 })
 
-UserSchema.methods.added = function(userJson) { // (new modelInfo.model({})).added()
+UserSchema.methods.added = function (userJson) { // (new modelInfo.model({})).added()
   console.log('Add the info succeed:' + JSON.stringify(userJson))
 }
 UserSchema.methods.compare = function (password) {
-  return bcrypt.compareSync(password, this.password);
+  return bcrypt.compareSync(password, this.password)
 }
 
 const modelName = 'User'

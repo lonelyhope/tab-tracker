@@ -75,6 +75,7 @@ export default {
   async mounted () {
     // 这里找不到 song._id >.<
     const songId = store.state.route.params.songId
+    console.log('songid: ' + songId)
     const bookmark = await BookmarkServices.query({
       email: store.state.user,
       songId: songId

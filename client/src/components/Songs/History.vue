@@ -1,8 +1,8 @@
 <template>
-  <panel title="Bookmarks">
+  <panel title="historys">
     <v-data-table
       :headers="headers"
-      :items="bookmarks">
+      :items="historys">
       <template slot="items" slot-scope="props">
         <td class="text-xs-right">
           {{props.item.title}}
@@ -39,8 +39,9 @@ export default {
     const res = await HistoryService.query({
       email: store.state.user
     })
-    this.historys = res.data
-    console.log(this.bookmarks)
+    this.historys = res.data.historys
+    console.log('history:')
+    console.log(this.historys)
   }
 }
 </script>

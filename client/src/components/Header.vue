@@ -45,6 +45,7 @@
 
 <script>
 import store from '../store/store'
+import sessionStorageService from '@/services/sessionStorageService'
 
 export default {
   data: function () {
@@ -58,6 +59,9 @@ export default {
       store.dispatch('setUser', null)
       this.$router.push({name: 'songs'})
       console.log('logout')
+      sessionStorageService.deleteUserInfo()
+      // 强制刷新页面
+      location.reload(true)
     }
   }
 }

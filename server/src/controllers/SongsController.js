@@ -2,25 +2,25 @@ const { Song } = require('../models')
 
 module.exports = {
   async index (req, res) {
-    var findInfo = {title:{$exists:true}}
+    var findInfo = {title: { $exists: true }}
     const search = req.query.search
     if (search) {
       console.log('search')
       findInfo = {
-        $or : [ //多条件，数组
-          {title : {$regex : search}},
-          {artist : {$regex : search}}
+        $or: [ // 多条件，数组
+          {title: { $regex: search }},
+          {artist: { $regex: search }}
         ]
       }
     }
-    Song.
-      find(findInfo).
-      limit(10).
-      exec((err, song) => {
+    Song
+      .find(findInfo)
+      .limit(10)
+      .exec((err, song) => {
         if (err) {
           console.log('There is an error when find songs:' + err)
           res.status(500).send({error: 'server error'})
-          return;
+          return
         }
         console.log(song.length)
         res.send(song)
@@ -30,7 +30,7 @@ module.exports = {
     const song = new Song(req.body)
     song.save((err, song) => {
       if (err) {
-        console.log('There is an error when saving a song: ' + err);
+        console.log('There is an error when saving a song: ' + err)
         res.status(500).send({err: err})
         return
       }

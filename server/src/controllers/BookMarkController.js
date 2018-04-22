@@ -26,16 +26,24 @@ module.exports = {
     console.log(`bookmark-delete: ${email}, ${songId}`)
     try {
       let user = await User.findOne({email: email})
-      if (!user) return
+      if (!user) {
+        console.log('bookmark delete: invalid user')
+        return
+      }
       let relatedSongs = user.bookmark
+      console.log('bookmark delete: relatedsongs:' + relatedSongs)
       let find = false
       for (let i = 0; i < relatedSongs.length; i++) {
+        console.log('bookmark delete: ' + relatedSongs[i] + ' ' + songId)
         if (relatedSongs[i] == songId) {
           user.bookmark.splice(i, 1)
+          console.log('bookmark delete: splice ')
+          console.log(user.bookmark)
           find = true
           break
         }
       }
+      console.log('bookmarak delete: find ' + find)
       if (!find) return
       await user.save()
       console.log(`delete bookmark success: ${JSON.stringify(user.toJSON())}`)
@@ -64,6 +72,7 @@ module.exports = {
           break
         }
       }
+      console.log('bookmark query: find ' + find)
       res.send({find: find})
     } catch (err) {
       console.log('err when query bookmark:' + err)
@@ -74,10 +83,10 @@ module.exports = {
     const {email} = req.query
     console.log(`getBookSongs: ${email}`)
     try {
-      let user = await User.
-        findOne({email: email}).
-        populate('bookmark').
-        exec()
+      let user = await User
+        .findOne({email: email})
+        .populate('bookmark')
+        .exec()
       console.log(`find book songs: ${(user.bookmark.map(song => song.title))}`)
       let songsInfo = []
       user.bookmark.forEach(song => {

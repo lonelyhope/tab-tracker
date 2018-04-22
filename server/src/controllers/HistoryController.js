@@ -1,4 +1,4 @@
-const { History, User } = require('../models')
+const { History, User, Song } = require('../models')
 
 module.exports = {
   // 添加历史
@@ -19,7 +19,7 @@ module.exports = {
           userId: user._id
         })
       }
-      let history = await HistoryInfo.save()
+      await HistoryInfo.save()
       console.log(`save history success: ${email}, ${songId}`)
       res.send('ok')
     } catch (err) {
@@ -39,9 +39,17 @@ module.exports = {
       let user = await User.findOne({email: email})
       let historys = await History.find({userId: user._id})
       console.log(`query historys: ${historys}`)
-      res.send('ok')
+      let historySongs = []
+      for (let i = 0; i < historys.length; i++) {
+        let song = await Song.findOne({ _id: historys[i].songId })
+        historySongs.push(song)
+      }
+      res.send({
+        historys: historySongs
+      })
     } catch (err) {
       console.log(`error when query history: ${err}`)
+      res.status(500).send({error: err})
     }
   }
 }

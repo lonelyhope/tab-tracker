@@ -1,6 +1,7 @@
-import Vue from 'Vue'
-import Vuex from 'Vuex'
+import Vue from 'vue'
+import Vuex from 'vuex'
 // import createPersistedState from 'vuex-persistedstate'
+import sessionStorageService from '@/services/sessionStorageService'
 
 Vue.use(Vuex)
 
@@ -17,10 +18,18 @@ const store = new Vuex.Store({
       state.isUserLoggedIn = !!(token)
       console.log('setToken:' + token)
       console.log('isUserLoggedIn: ' + state.isUserLoggedIn)
+      sessionStorageService.saveUserInfo({
+        user: state.user,
+        token: state.token
+      })
     },
     setUser (state, user) {
       console.log('setUser: ' + user)
       state.user = user
+      sessionStorageService.saveUserInfo({
+        user: state.user,
+        token: state.token
+      })
     }
   },
   actions: {

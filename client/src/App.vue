@@ -13,16 +13,23 @@
 
 <script>
 import PageHeader from './components/Header.vue'
+import sessionStorageService from './services/sessionStorageService'
 
 export default {
   name: 'App',
   components: {
     PageHeader
+  },
+  created () {
+    console.log('mounted:')
+    var userInfo = sessionStorageService.getUserInfo()
+    console.log('userInfo:')
+    console.log(userInfo)
+    if (userInfo !== null) {
+      this.$store.dispatch('setToken', userInfo.token)
+      this.$store.dispatch('setUser', userInfo.user)
+    }
   }
-  // created: function () {
-  //   console.log('App: ' + this.$store)
-  //   console.log(this.$router)
-  // }
 }
 </script>
 

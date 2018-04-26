@@ -2,6 +2,7 @@ const { History, User, Song } = require('../models')
 
 module.exports = {
   // 添加历史
+  // 先判断历史歌曲是否存在，若不存在则插入
   async add (req, res) {
     const { email, songId } = req.body
     try {
@@ -32,6 +33,8 @@ module.exports = {
   },
 
   // 查询历史
+  // find user.email --> user._id --> find history.songs._id --> find song
+  // 需要 2 + n 次查找（n个历史）
   async query (req, res) {
     const { email } = req.query
     console.log(email)

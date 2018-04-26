@@ -8,8 +8,8 @@ module.exports = {
       console.log('search')
       findInfo = {
         $or: [ // 多条件，数组
-          {title: { $regex: search }},
-          {artist: { $regex: search }}
+          {title: { $regex: '[' + search + ']' }},
+          {artist: { $regex: '[' + search + ']' }}
         ]
       }
     }
